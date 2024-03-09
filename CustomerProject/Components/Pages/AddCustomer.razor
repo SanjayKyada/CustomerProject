@@ -1,0 +1,55 @@
+﻿@page "/addCustomer"
+
+@inject ICustomerRepository Repository
+@inject NavigationManager Navigation
+
+<PageTitle>Add New Customer</PageTitle>
+<div class="raw justify-content-center">
+    <div class="col-6">
+        <EditForm FormName="AddCustomerForm" OnValidSubmit="AddCust" Model="customer" method="post" autocomplete="off">
+            <h3>
+                Add New Customer
+
+            </h3>
+            <div class="mb-3">
+                <label for="Name" class="form-label">Name</label>
+                <InputText id="Name" @bind-Value="customer.Name" class="form-control shadow-none"></InputText>
+            </div>
+
+            <div class="mb-3">
+                <label for="Age" class="form-label">Age</label>
+                <InputNumber id="Age" @bind-Value="customer.Age" class="form-control shadow-none"></InputNumber>
+            </div>
+
+            <div class="mb-3">
+                <label for="Postcode" class="form-label">Post Code</label>
+                <InputText id="Postcode" @bind-Value="customer.PostCode" class="form-control shadow-none"></InputText>
+            </div>
+
+            <div class="mb-3">
+                <label for="Height" class="form-label">Height(in meters)</label>
+                <InputNumber id="Height" @bind-Value="customer.Height" class="form-control shadow-none"></InputNumber>
+            </div>
+            <div class="mb-3">
+                <button class="btn btn-primary shadow-none">
+                    Submit
+                </button>
+                <a href="/" class="btn btn-primary shadow-none ms-3">Back to List</a>
+            </div>
+            <DataAnnotationsValidator />
+            <ValidationSummary />
+        </EditForm>
+    </div>
+
+</div>
+
+@code {
+    [SupplyParameterFromForm]
+    public Customer customer { get; set; } = new();
+    private void AddCust()
+    {
+        Repository.Add(customer);
+
+        //Navigation.NavigateTo("/");
+    }
+}

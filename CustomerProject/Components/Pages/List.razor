@@ -1,0 +1,47 @@
+﻿@page "/"
+
+@inject ICustomerRepository Repository;
+
+<PageTitle>Customer List</PageTitle>
+
+<div class="row justify-content-center">
+    
+    <div class="col-6">
+        <div class="col-6">
+            <a href="addCustomer" class="btn btn-primary shadow-none mb-3">
+                Add New
+            </a>
+        </div>
+        @if (customers is null)
+        {
+            <div class="customer-item">
+                No book found.
+            </div>
+        }
+        else if(customers.Any()){
+            @foreach (var customer in customers)
+            {
+                <div class="customer-item">
+                    <div class="customer-card-body">
+                        <h5>@customer.Name || @customer.PostCode</h5>
+                    </div>
+
+                </div>
+            
+            }
+        }
+    </div>
+
+
+</div>
+
+
+@code {
+    private List<Customer>? customers;
+
+    protected override async Task OnInitializedAsync()
+    {
+        customers=await Repository.GetAll();
+        
+    }
+}
